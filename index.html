@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Almaz Notes</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="note-header">
+        <p class="header">Almaz Notes</p>
+    </div>
+    <div class="add-note">
+        <label>
+            <input class="input_area" value='' spellcheck="false" placeholder="Enter your genius thoughts">
+            <button class="btn" onclick="addTextToArray(); clearInput(); showTextFromArray(); enter()">Add Note</button>
+        </label>
+    </div>
+    <div class="created-notes">
+        <ul>
+
+        </ul>
+    </div>
+    
+</div>
+<script src="index.js"></script>
+</body>
+</html>
