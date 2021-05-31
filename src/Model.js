@@ -15,5 +15,10 @@ export class Model {
         }
 
         this.data.push(todo);
+        this.initRender(this.data);
+    }
+
+    bindInitRender(callback) {
+        this.initRender = callback;
     }
 }

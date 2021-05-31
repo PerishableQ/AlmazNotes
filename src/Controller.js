@@ -3,10 +3,11 @@ export class Controller {
         this.view = viewModule;
         this.model = modelModule;
 
-        this.initController(this.model.data);
+        this.initRender(this.model.data);
+        this.model.bindInitRender(this.initRender);
     }
 
-    initController(data) {
+    initRender = data => {
         this.view.render(data);
     }
 }
