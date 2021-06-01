@@ -1,3 +1,7 @@
-li {
-    border: 1px solid;
+.delete {
+    margin-left: 10px;
+}
+
+ul {
+    list-style-type: none;
 }

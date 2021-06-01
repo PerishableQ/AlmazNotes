@@ -6,7 +6,7 @@ export class View extends DomListener {
         // root class app
         this.$root = this.get(selector);
 
-        this.title = this.create('h1', 'Todo List');
+        this.title = this.create('h2', 'Todo List');
         this.form = this.create('form');
         this.button = this.create('button', 'Submit');
 
@@ -19,6 +19,9 @@ export class View extends DomListener {
 
         this.form.append(this.input, this.button);
         this.$root.append(this.title, this.form, this.list);
+
+        this.editableText = '';
+        this._initLocalListeners()
     }
 
     get _todoText() {
@@ -27,6 +30,51 @@ export class View extends DomListener {
 
     _resetInput() {
         this.input.value = '';
+    }
+
+    _initLocalListeners() {
+        this.list.addEventListener('input', event => {
+          if (event.target.className === 'editable') {
+            this.editableText = event.target.innerText
+          }
+        });
+      }
+
+    bindAddTodo(eventHandlerFunction) {
+        this.form.addEventListener('submit', event => {
+            event.preventDefault();
+
+            if (this._todoText) {
+                eventHandlerFunction(this._todoText);
+                this._resetInput();
+            }
+        })
+    }
+
+    bindDeleteTodo(eventHandlerFunction) {
+        this.list.addEventListener('click', event => {
+            if (event.target.className === 'delete') {
+                const id = +event.target.parentElement.id;
+                eventHandlerFunction(id);
+            }
+        });
+    }
+
+    bindEditTodo(eventHandlerFunction) {
+        this.list.addEventListener('focusout', event => {
+            if (this.editableText) {
+                eventHandlerFunction(+event.target.parentElement.id, this.editableText);
+                this.editableText = '';
+            }
+        })
+    }
+
+    bindFlipCheck(eventHandlerFunction) {
+        this.list.addEventListener('change', event => {
+            if (event.target.type === 'checkbox') {
+                eventHandlerFunction(+event.target.parentElement.id)
+            }
+        })
     }
     
     render(data) {
@@ -51,8 +99,9 @@ export class View extends DomListener {
                 span.classList.add('editable');
 
                 if (el.status) {
-                    const strike = this.create('strikethrough');
+                    const strike = this.create('s');
                     strike.textContent = el.text;
+                    strike.textContent = el.date;
                     span.append(strike);
                 } else {
                     span.textContent = el.text + ' ' + el.date;
