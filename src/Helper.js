@@ -9,13 +9,4 @@ export class Helper {
     get($el) {
         return document.querySelector($el);
     }
-
-    onAddTodo() {
-        this.form = this.create('form');
-        this.submitBtn = this.create('button', 'Submit');
-
-        this.input = this.create('input');
-        this.input.type = 'text';
-        this.input.placeholder = 'Add your things';
-    }
 }
