@@ -1,14 +1,14 @@
-import {DomListener} from './DOMListener.js';
+import {Helper} from './Helper.js';
 
-export class View extends DomListener {
+export class View extends Helper {
     constructor(selector) {
         super();
         // root class app
         this.$root = this.get(selector);
-
         this.title = this.create('h2', 'Todo List');
+
         this.form = this.create('form');
-        this.button = this.create('button', 'Submit');
+        this.submitBtn = this.create('button', 'Submit');
 
         this.input = this.create('input');
         this.input.type = 'text';
@@ -17,7 +17,7 @@ export class View extends DomListener {
         this.list = this.create('ul');
         this.list.classList.add('todo-list');
 
-        this.form.append(this.input, this.button);
+        this.form.append(this.input,  this.submitBtn);
         this.$root.append(this.title, this.form, this.list);
 
         this.editableText = '';
@@ -94,22 +94,26 @@ export class View extends DomListener {
                 checkbox.type = 'checkbox';
                 checkbox.checked = el.status;
 
-                const span = this.create('span');
-                span.contentEditable = true;
-                span.classList.add('editable');
+                const span1 = this.create('span');
+                span1.contentEditable = true;
+                span1.classList.add('editable');
+
+                const span2 = this.create('span');
+                span2.contentEditable = false;
 
                 if (el.status) {
                     const strike = this.create('s');
                     strike.textContent = el.text;
                     strike.textContent = el.date;
-                    span.append(strike);
+                    span1.append(strike);
                 } else {
-                    span.textContent = el.text + ' ' + el.date;
+                    span1.textContent = el.text;
+                    span2.textContent = el.date;
                 }
 
                 const deleteBtn = this.create('button', 'Delete');
                 deleteBtn.classList.add('delete')
-                li.append(checkbox, span, deleteBtn);
+                li.append(checkbox, span1, span2, deleteBtn);
 
                 this.list.append(li);
                 this.$root.append(this.title, this.form, this.list);

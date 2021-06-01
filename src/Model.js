@@ -30,10 +30,10 @@ export class Model {
     }
 
     editTodo(id, text) {
-        this.data.map(
+        this.updateLocalStorage(this.data.map(
             dataEl => dataEl.id === id ?
             {id: dataEl.id, text: text, date: dataEl.date, status: dataEl.status} :
-            dataEl);
+            dataEl));
     }
 
     flipCheck(id) {
@@ -42,6 +42,7 @@ export class Model {
             {id: dataEl.id, text: dataEl.text, date: dataEl.date, status: !dataEl.status} :
             dataEl);
 
+        this.updateLocalStorage(this.data);
         this.initRender(this.data);
     }
 
